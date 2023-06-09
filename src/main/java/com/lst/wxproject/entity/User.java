@@ -17,4 +17,5 @@ public class User {
     private String remarks;     //备注
     private String createTime;  //创建时间
     private String phoneNum;    //手机号码
+    private String token;       //秘钥
 }
