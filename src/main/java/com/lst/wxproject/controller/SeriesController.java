@@ -5,12 +5,17 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lst.wxproject.common.Constants;
 import com.lst.wxproject.common.Result;
+import com.lst.wxproject.entity.Product;
 import com.lst.wxproject.entity.Series;
 import com.lst.wxproject.entity.Swiper;
+import com.lst.wxproject.entity.User;
 import com.lst.wxproject.mapper.SeriesMapper;
 import com.lst.wxproject.mapper.SwiperMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @RequestMapping("series")
@@ -20,8 +25,10 @@ public class SeriesController {
     @GetMapping
     public Result<?> swiperList(@RequestParam(defaultValue = "1") Integer pageNum,
                                 @RequestParam(defaultValue = "10")Integer pageSize,
-                                @RequestParam(defaultValue = "") String search){
+                                @RequestParam(required = false )String seriesName){
         LambdaQueryWrapper<Series> wrapper = Wrappers.<Series>lambdaQuery();;
+        wrapper.orderByDesc(Series::getCreateTime);
+        wrapper.like(Series::getSeriesName,seriesName);
         Page<Series> userPage = seriesMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
         return Result.success(userPage);
     }
@@ -29,6 +36,9 @@ public class SeriesController {
 
     @PostMapping
     public Result save (@RequestBody Series series){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sf.format(new Date());
+        series.setCreateTime(format);
         int insert = seriesMapper.insert(series);
         if (insert>0){
             return Result.success();

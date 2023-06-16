@@ -12,6 +12,9 @@ import com.lst.wxproject.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @RestController
 @RequestMapping("product")
 public class ProductController {
@@ -22,15 +25,19 @@ public class ProductController {
     @GetMapping
     public Result<?> swiperList(@RequestParam(defaultValue = "1") Integer pageNum,
                                 @RequestParam(defaultValue = "10")Integer pageSize,
-                                @RequestParam(defaultValue = "") String search){
+                                @RequestParam(required = false )String productName){
         LambdaQueryWrapper<Product> wrapper = Wrappers.<Product>lambdaQuery();;
         wrapper.orderByDesc(Product::getCreateTime);
+        wrapper.like(Product::getProductName,productName);
         Page<Product> userPage = productMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
         return Result.success(userPage);
     }
 
     @PostMapping
     public Result save (@RequestBody Product product){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sf.format(new Date());
+        product.setCreateTime(format);
         int insert = productMapper.insert(product);
         if (insert>0){
             return Result.success();

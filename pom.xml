@@ -111,7 +111,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.lst.wxproject.WxProjectApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

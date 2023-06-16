@@ -13,4 +13,5 @@ public class Swiper {
     private String swiperIntro;     //轮播图介绍
     private String swiperPic;       //轮播图图片
     private Integer authority;      //轮播图权重
+    private String createTime;      //创建时间
 }

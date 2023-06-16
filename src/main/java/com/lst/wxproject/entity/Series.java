@@ -13,4 +13,5 @@ public class Series {
     private String seriesIntro;     //系列介绍
     private String seriesPic;       //系列图
     private String seriesName;      //系列名称
+    private String createTime;      //创建时间
 }

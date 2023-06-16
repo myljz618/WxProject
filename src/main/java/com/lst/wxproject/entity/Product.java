@@ -14,4 +14,5 @@ public class Product {
     private String productIntro;    //产品介绍
     private String createTime;      //产品创建时间
     private String productPic;      //产品图
+    private String productName;     //产品名称
 }

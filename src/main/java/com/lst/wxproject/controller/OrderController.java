@@ -29,12 +29,12 @@ public class OrderController {
     @GetMapping
     public Result<?> swiperList(@RequestParam(defaultValue = "1") Integer pageNum,
                                 @RequestParam(defaultValue = "10")Integer pageSize,
-                                @RequestParam(defaultValue = "") String search){
+                                @RequestParam(required = false )String orderNum
+                               ){
         LambdaQueryWrapper<Order> wrapper = Wrappers.<Order>lambdaQuery();;
         wrapper.orderByDesc(Order::getCreateTime);
-        wrapper.like(Order::getIsActive,0);
-        if(StrUtil.isAllBlank(search)){
-            wrapper.like(Order::getOrderNum,search);
+        if(!StrUtil.isAllBlank(orderNum)){
+            wrapper.like(Order::getOrderNum,orderNum);
         }
         Page<Order> userPage = orderMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
         return Result.success(userPage);

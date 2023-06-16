@@ -14,6 +14,7 @@ import com.lst.wxproject.mapper.SwiperMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -34,6 +35,9 @@ public class SwiperController {
 
     @PostMapping
     public Result save (@RequestBody Swiper swiper){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sf.format(new Date());
+        swiper.setCreateTime(format);
         int insert = swiperMapper.insert(swiper);
         if (insert>0){
             return Result.success();
