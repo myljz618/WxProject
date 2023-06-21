@@ -12,6 +12,8 @@ import com.lst.wxproject.entity.Product;
 import com.lst.wxproject.entity.User;
 import com.lst.wxproject.mapper.OrderMapper;
 import com.lst.wxproject.mapper.OrderNumMapper;
+import com.lst.wxproject.mapper.ProductMapper;
+import com.lst.wxproject.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,10 @@ public class OrderController {
     private OrderMapper orderMapper;
     @Autowired
     private OrderNumMapper orderNumMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     @GetMapping
     public Result<?> swiperList(@RequestParam(defaultValue = "1") Integer pageNum,

@@ -43,5 +43,7 @@ public class Order {
     private String orderNum;            //订单号
 
     @TableField(exist = false)
-    private List<User> Users;
+    private String username;            //用户名
+    @TableField(exist = false)
+    private String productName;         //产品名称
 }
